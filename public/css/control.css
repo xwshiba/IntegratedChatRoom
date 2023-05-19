@@ -1,0 +1,19 @@
+.main__control {
+    width: 100%;
+}
+
+.outgoing__forms {
+    flex-direction: row;
+
+    padding: 1.6rem;
+}
+
+.outgoing__message{
+    width: 80%;
+
+    margin-right: 2rem;
+}
+
+.outgoing__btn {
+    width: 20%;
+}

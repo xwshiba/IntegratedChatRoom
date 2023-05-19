@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+
+    font-family: sans-serif;
+}
+
+li {
+    list-style-type: none;
+}
+
+#app {
+    height: 100%;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.header__title {
+    margin: 0.4rem;
+
+    text-align: center;
+}
+
+.main {
+    min-height: 80vh;
+
+    display: grid;
+    grid-template-rows: 1fr auto;
+
+    overflow-y: auto;
+}
+
+.btn {
+    min-width: 8rem;
+    min-height: 2rem;
+    max-width: 30rem;
+
+    /* top-bottom left-right */
+    margin: 2rem;
+    padding: 0.4rem 1rem;
+
+    border: 2px solid hsl(210, 22%, 49%);
+    border-radius: 0.4rem;
+
+    background-color: white;
+}
+
+.btn:hover {
+    background-color: black;
+
+    color: white;
+
+    cursor: pointer;
+}

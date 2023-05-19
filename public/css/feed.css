@@ -1,0 +1,118 @@
+.main__feed {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.instruction {
+    margin: 0.4rem;
+}
+
+.login {
+    width: 80%;
+
+    margin-top: 2rem;
+}
+
+.content {
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.content__chat {
+    display: flex;
+    flex-direction: row;
+
+    margin: 0 2rem 0 0.4rem;
+}
+
+.users {
+    max-width: 10rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    margin: 0 1rem 0 0;
+    padding: 0 2rem;
+
+    overflow-wrap: anywhere; /* for breaking long usernames */
+
+    border-right: 2px solid rgb(190, 190, 190);
+}
+
+.user__info {
+    padding-bottom: 1rem;
+}
+
+.user {
+    list-style-type: square;
+}
+
+.user__username--logged-in {
+    color: green;
+}
+
+.user__username--logged-out {
+    color: gray;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0;
+    padding: 0;
+
+    overflow-wrap: anywhere; /* for breaking long messages */
+}
+
+.messages__info {
+    padding-bottom: 1rem;
+}
+
+.message {
+    display: flex;
+    align-items: flex-start;
+
+    margin-bottom: 1rem;
+}
+
+.message__sender {
+    width: 8rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding-right: 3rem;
+    margin-right: 2rem;
+    border-right: 2px solid gray;
+}
+
+.avatar {
+    height: 3.6rem;
+
+    margin-bottom: 0.4rem;
+}
+
+.message__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.message-self .message__text {
+    color: green;
+}
+
+.message__time {
+    font-size: smaller;
+    color:grey;
+}
