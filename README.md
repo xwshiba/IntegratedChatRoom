@@ -17,6 +17,8 @@ This project intentionally avoids any web framework to demonstrate understanding
 
 ### Running Instructions
 - The app is usable by running `npm install` (once only), `npm run build`, `npm start`
+- main branch - CSS for appearance
+- tailwind branch - tailwind for appearance
 
 ### Tech Stacks
 - RESTful services using express
@@ -26,6 +28,7 @@ This project intentionally avoids any web framework to demonstrate understanding
 - Using RESTful services for authentication/authorization
 - Implement Basic polling feature to check the server for updates and update client state
   - Not using websockets or long polling, just a simple time-based loop
+- Using Tailwind CSS (including [Flowbite, MIT License](https://flowbite.com/docs/getting-started/license/)) in Tailwind branch
 
 ### Security
 
