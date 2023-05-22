@@ -95,7 +95,7 @@ export function addAbilityToSendMessage({ state, appEl, feedEl, controlEl }) {
     });
 };
 
-function refresh({ state, feedEl, controlEl }) {
+ function refresh({ state, feedEl, controlEl }) {
     fetchChatData()
         .then(chatData => {
             setChatApp(chatData);

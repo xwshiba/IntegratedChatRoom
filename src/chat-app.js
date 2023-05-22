@@ -1,3 +1,5 @@
+import './tailwind.css';
+
 import { SERVER, CLIENT } from './constants';
 import state, {
     login,
@@ -17,7 +19,7 @@ import {
     addAbilityToLogin,
     addAbilityToLogout,
     addAbilityToSendMessage,
-    pollRefreshedData,
+    // pollRefreshedData,
 } from './listeners';
 
 const appEl = document.querySelector('#app');
