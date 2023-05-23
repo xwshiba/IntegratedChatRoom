@@ -1,4 +1,4 @@
-# SimpleChatRoom
+# IntegratedChatRoom
 
 This app is a single page application that involves multiple logged in users. Users can send messages, view logged in users, and receive messages without refreshing the page.
 This project intentionally avoids any web framework to demonstrate understanding for web fundamentals.
