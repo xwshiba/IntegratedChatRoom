@@ -95,6 +95,8 @@ export function addAbilityToSendMessage({ state, appEl, feedEl, controlEl }) {
     });
 };
 
+/************* helper function *************/
+
 function refresh({ state, feedEl, controlEl }) {
     fetchChatData()
         .then(chatData => {

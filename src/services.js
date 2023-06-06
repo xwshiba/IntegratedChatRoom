@@ -1,86 +1,64 @@
-export function fetchSession() {
-    return fetch('/api/v1/session', {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json'
-        },
-        credentials: 'include',
-    })
+function fetchRequest(url, options) {
+    return fetch(url, options)
         .catch(() => Promise.reject({ error: 'network-error' }))
         .then(response => {
             if (response.ok) {
                 return response.json();
-            };
+            }
             return response.json()
                 .catch(error => Promise.reject({ error }))
                 .then(err => Promise.reject(err));
         });
 };
 
+// These functions all handle:
+// - MAKING the service calls
+// - Passing the data
+// - Parsing the results
+//
+// But these functions DO NOT
+// - change the state
+// - change the DOM
+//
+// This makes these functions fully decoupled and reuseable
+export function fetchSession() {
+    return fetchRequest('/api/v1/session', {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json'
+        },
+        credentials: 'include',
+    });
+};
+
 export function fetchLogin(username) {
-    return fetch('/api/v1/session', {
+    return fetchRequest('/api/v1/session', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
         },
         credentials: 'include',
         body: JSON.stringify({ username }),
-    })
-        .catch(() => Promise.reject({ error: 'network-error' }))
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            };
-            return response.json()
-                .catch(error => Promise.reject({ error }))
-                .then(err => Promise.reject(err));
-        });
+    });
 };
 
 export function fetchLogout() {
-    return fetch('/api/v1/session', {
+    return fetchRequest('/api/v1/session', {
         method: 'DELETE',
-    })
-        .catch(() => Promise.reject({ error: 'network-error' }))
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            };
-            return response.json()
-                .catch(error => Promise.reject({ error }))
-                .then(err => Promise.reject(err));
-        });
+    });
 };
 
 export function fetchChatData() {
-    return fetch('/api/v1/chats')
-        .catch(() => Promise.reject({ error: 'network-error' }))
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            };
-            return response.json()
-                .catch(error => Promise.reject({ error }))
-                .then(err => Promise.reject(err));
-        });
+    return fetchRequest('/api/v1/chats');
 };
 
 export function fetchSendMessage(message) {
-    return fetch('/api/v1/chats', {
+    return fetchRequest('/api/v1/chats', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
         },
         credentials: 'include',
         body: JSON.stringify({ message }),
-    })
-        .catch(() => Promise.reject({ error: 'networkError' }))
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            };
-            return response.json()
-                .catch(error => Promise.reject({ error }))
-                .then(err => Promise.reject(err));
-        });
+    });
 };
