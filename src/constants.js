@@ -1,3 +1,9 @@
+// Constants benefits
+// - reduces risk of typos (IDE can code-complete)
+// - easier to confirm it is correct (easier to check properties than strings)
+// - If a value changes, you can change it in one place and the rest of the code can continue to use the constant
+
+// Might be SERVER_CODES and CLIENT_CODES if we had more and different constants
 export const SERVER = {
     AUTH_MISSING: 'auth-missing',
     AUTH_INSUFFICIENT: 'auth-insufficient',
