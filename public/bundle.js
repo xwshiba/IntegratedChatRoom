@@ -19,6 +19,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+// Constants benefits
+// - reduces risk of typos (IDE can code-complete)
+// - easier to confirm it is correct (easier to check properties than strings)
+// - If a value changes, you can change it in one place and the rest of the code can continue to use the constant
+
+// Might be SERVER_CODES and CLIENT_CODES if we had more and different constants
 var SERVER = {
   AUTH_MISSING: 'auth-missing',
   AUTH_INSUFFICIENT: 'auth-insufficient',
@@ -180,6 +186,9 @@ function addAbilityToSendMessage(_ref3) {
   });
 }
 ;
+
+/************* helper function *************/
+
 function refresh(_ref4) {
   var state = _ref4.state,
     feedEl = _ref4.feedEl,
@@ -354,14 +363,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   fetchSendMessage: () => (/* binding */ fetchSendMessage),
 /* harmony export */   fetchSession: () => (/* binding */ fetchSession)
 /* harmony export */ });
-function fetchSession() {
-  return fetch('/api/v1/session', {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json'
-    },
-    credentials: 'include'
-  })["catch"](function () {
+function fetchRequest(url, options) {
+  return fetch(url, options)["catch"](function () {
     return Promise.reject({
       error: 'network-error'
     });
@@ -369,7 +372,6 @@ function fetchSession() {
     if (response.ok) {
       return response.json();
     }
-    ;
     return response.json()["catch"](function (error) {
       return Promise.reject({
         error: error
@@ -380,8 +382,29 @@ function fetchSession() {
   });
 }
 ;
+
+// These functions all handle:
+// - MAKING the service calls
+// - Passing the data
+// - Parsing the results
+//
+// But these functions DO NOT
+// - change the state
+// - change the DOM
+//
+// This makes these functions fully decoupled and reuseable
+function fetchSession() {
+  return fetchRequest('/api/v1/session', {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json'
+    },
+    credentials: 'include'
+  });
+}
+;
 function fetchLogin(username) {
-  return fetch('/api/v1/session', {
+  return fetchRequest('/api/v1/session', {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
@@ -390,69 +413,21 @@ function fetchLogin(username) {
     body: JSON.stringify({
       username: username
     })
-  })["catch"](function () {
-    return Promise.reject({
-      error: 'network-error'
-    });
-  }).then(function (response) {
-    if (response.ok) {
-      return response.json();
-    }
-    ;
-    return response.json()["catch"](function (error) {
-      return Promise.reject({
-        error: error
-      });
-    }).then(function (err) {
-      return Promise.reject(err);
-    });
   });
 }
 ;
 function fetchLogout() {
-  return fetch('/api/v1/session', {
+  return fetchRequest('/api/v1/session', {
     method: 'DELETE'
-  })["catch"](function () {
-    return Promise.reject({
-      error: 'network-error'
-    });
-  }).then(function (response) {
-    if (response.ok) {
-      return response.json();
-    }
-    ;
-    return response.json()["catch"](function (error) {
-      return Promise.reject({
-        error: error
-      });
-    }).then(function (err) {
-      return Promise.reject(err);
-    });
   });
 }
 ;
 function fetchChatData() {
-  return fetch('/api/v1/chats')["catch"](function () {
-    return Promise.reject({
-      error: 'network-error'
-    });
-  }).then(function (response) {
-    if (response.ok) {
-      return response.json();
-    }
-    ;
-    return response.json()["catch"](function (error) {
-      return Promise.reject({
-        error: error
-      });
-    }).then(function (err) {
-      return Promise.reject(err);
-    });
-  });
+  return fetchRequest('/api/v1/chats');
 }
 ;
 function fetchSendMessage(message) {
-  return fetch('/api/v1/chats', {
+  return fetchRequest('/api/v1/chats', {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
@@ -461,22 +436,6 @@ function fetchSendMessage(message) {
     body: JSON.stringify({
       message: message
     })
-  })["catch"](function () {
-    return Promise.reject({
-      error: 'networkError'
-    });
-  }).then(function (response) {
-    if (response.ok) {
-      return response.json();
-    }
-    ;
-    return response.json()["catch"](function (error) {
-      return Promise.reject({
-        error: error
-      });
-    }).then(function (err) {
-      return Promise.reject(err);
-    });
   });
 }
 ;
