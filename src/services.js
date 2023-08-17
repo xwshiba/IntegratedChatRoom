@@ -21,42 +21,57 @@ function fetchRequest(url, options) {
 // - change the DOM
 //
 // This makes these functions fully decoupled and reuseable
+
+export function fetchCsrfToken() {
+    return fetchRequest('/api/v1/csrf_token');
+};
+
 export function fetchSession() {
     return fetchRequest('/api/v1/session', {
         method: 'GET',
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
         },
         credentials: 'include',
     });
 };
 
-export function fetchLogin(username) {
+export function fetchLogin(csrfToken, username) {
     return fetchRequest('/api/v1/session', {
         method: 'POST',
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'X-CSRF-Token': csrfToken,
         },
         credentials: 'include',
         body: JSON.stringify({ username }),
     });
 };
 
-export function fetchLogout() {
+export function fetchLogout(csrfToken) {
     return fetchRequest('/api/v1/session', {
         method: 'DELETE',
+        headers: {
+            'X-CSRF-Token': csrfToken,
+        }
     });
 };
 
 export function fetchChatData() {
-    return fetchRequest('/api/v1/chats');
+    return fetchRequest('/api/v1/chats', {
+        method: 'GET',
+        headers: {
+            'content-type': 'application/json',
+        },
+    });
 };
 
-export function fetchSendMessage(message) {
+export function fetchSendMessage(csrfToken, message) {
     return fetchRequest('/api/v1/chats', {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
+            'X-CSRF-Token': csrfToken,
         },
         credentials: 'include',
         body: JSON.stringify({ message }),

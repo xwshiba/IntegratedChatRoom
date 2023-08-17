@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   include ValidationHelper
-  include UsersManager
+  include Users
 
   def set_status
     username = params[:username] # Get the username from your frontend
     status = params[:status] # Get the status from your frontend (e.g., true or false)
     
-    if !username.blank? && isValidUsername(username) # Check if username is present
-      set_user_status(username, status) # Assuming users is your object for handling user info
+    if !username.blank? && is_valid_username(username) # Check if username is present
+      users_manager.set_user_status(username, status) # Use the method from the Users module
       head :ok
     else
       head :bad_request
@@ -15,18 +15,12 @@ class UsersController < ApplicationController
   end
 
   def offline_users
-    offline_users = get_offline_users
-    render json: { offlineUsers: get_offline_users }
+    offline_users = users_manager.get_offline_users
+    render json: { offlineUsers: offline_users }
   end
 
   def logged_in_users
-    logged_in_users = get_logged_in_users # Assuming users has a method for this
+    logged_in_users = users_manager.get_logged_in_users # Use the method from the Users module
     render json: { loggedInUsers: logged_in_users }
-  end
-
-  private
-
-  def users
-    @users ||= UsersManager.new # Initialize your users manager object here
   end
 end

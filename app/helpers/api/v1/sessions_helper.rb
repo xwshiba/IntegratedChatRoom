@@ -2,8 +2,8 @@ module Api
   module V1
     module SessionsHelper
       def get_session_details(request)
-        sid = cookies[:sid]
-        username = sid ? session[:username] : ''
+        sid = cookies[:_integrated_chat_room_session]
+        username = params.dig(:session, :username) || ''
         { sid: sid, username: username }
       end
 

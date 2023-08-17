@@ -1,0 +1,76 @@
+Arguments: 
+  /usr/local/bin/node /opt/homebrew/Cellar/yarn/1.22.19/libexec/bin/yarn.js add @hotwired-stimulus
+
+PATH: 
+  /Users/xinyiwu/.rbenv/shims:/Users/xinyiwu/.pyenv/shims:/Users/xinyiwu/.pyenv/bin:/Users/xinyiwu/anaconda3/bin:/Users/xinyiwu/anaconda3/condabin:/Users/xinyiwu/.pyenv/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.13.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/@hotwired-stimulus: Request "https://registry.yarnpkg.com/@hotwired-stimulus" returned a 405
+      at params.callback [as _callback] (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:66154:18)
+      at self.callback (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/opt/homebrew/Cellar/yarn/1.22.19/libexec/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+
+npm manifest: 
+  {
+    "name": "chat-app",
+    "version": "1.0.0",
+    "description": "chat-app",
+    "main": "server.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "npx webpack",
+      "start": "rails server",
+      "dev": "npx webpack serve"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "@babel/core": "^7.21.3",
+      "@babel/preset-env": "^7.20.2",
+      "autoprefixer": "^10.4.14",
+      "babel-loader": "^9.1.2",
+      "css-loader": "^6.7.4",
+      "nodemon": "^2.0.21",
+      "postcss": "^8.4.23",
+      "postcss-loader": "^7.3.0",
+      "postcss-preset-env": "^8.3.2",
+      "style-loader": "^3.3.2",
+      "tailwindcss": "^3.3.2",
+      "webpack": "^5.83.1",
+      "webpack-cli": "^5.1.1",
+      "webpack-dev-server": "^4.15.0"
+    },
+    "dependencies": {
+      "@hotwired/turbo-rails": "^7.3.0",
+      "@tailwindcss/forms": "^0.5.3",
+      "cookie-parser": "^1.4.6",
+      "daisyui": "^2.51.6",
+      "express": "^4.18.2",
+      "flowbite": "^1.6.5",
+      "uuid": "^9.0.0",
+      "yarn": "^1.22.19"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

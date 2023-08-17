@@ -2,11 +2,11 @@
 module Api
   module V1
     class SessionsController < ApplicationController
-    include SessionsHelper
-    include ValidationHelper
-    include Users
-    include ChatApp
-
+      include SessionsHelper
+      include ValidationHelper
+      include ChatApp
+      include Users
+    
       def get_session
         session_details = get_session_details(request)
 
@@ -29,7 +29,7 @@ module Api
         else
           session[:username] = username # Add a session for the authenticated user
           users_manager.set_user_status(username, true)
-          cookies[:sid] = sid
+          cookies[:_integrated_chat_room_session] = sid
           
           render json: { # Sends a JSON response with additional data to avoid an extra request
             offlineUsers: users_manager.get_offline_users(),
