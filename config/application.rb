@@ -14,6 +14,7 @@ module IntegratedChatRoom
     config.load_defaults 7.0
 
     config.autoload_paths += %W(#{config.root}/app/controllers/concerns)
+    config.session_store :cookie_store, key: '_integrated_chat_room_session', expire_after: 1.day
 
     # Configuration for the application, engines, and railties goes here.
     #
