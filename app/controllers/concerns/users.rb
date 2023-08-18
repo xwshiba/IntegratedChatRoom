@@ -1,22 +1,28 @@
 # app/controllers/concerns/users.rb
-# since currently the app only has one instance, it's ok to use it as a module
-# if we want to have multiple instances, we can make it a class and use it as a singleton
-# or use a database to store the data
+# since currently the app only has one instance, it's ok for now
+# if we want to have multiple instances, we can make it a class or use a database to store the data
 
 module Users
+  DEFAULT_USERS = {
+    'admin': true
+  }.freeze
+
   def self.included(base)
     base.extend(ClassMethods)
   end
 
   module ClassMethods
     def users_manager
-      @users_manager ||= Manager.new
+      @users_manager ||= Manager.instance
     end
   end
 
   class Manager
+    require 'singleton'
+    include Singleton
+    
     def initialize
-      @users = {}
+      @users = DEFAULT_USERS.dup
     end
 
     def set_user_status(username, status)

@@ -1,5 +1,3 @@
-require 'securerandom'
-
 module ChatApp
   DEFAULT_MESSAGES = {
     'id1' => {
@@ -17,6 +15,9 @@ module ChatApp
   }.freeze
 
   class ChatManager
+    require 'singleton'
+    include Singleton
+    
     def initialize
       @messages = DEFAULT_MESSAGES.dup
     end
@@ -42,13 +43,13 @@ module ChatApp
     end
   end
 
-  module ClassMethods
-    def chat_manager
-      @chat_manager ||= ChatManager.new
-    end
+  def self.included(base)
+    base.extend(ClassMethods)
   end
 
-  extend ClassMethods
+  module ClassMethods
+    def chat_manager
+      @chat_manager ||= ChatManager.instance
+    end
+  end
 end
-
-

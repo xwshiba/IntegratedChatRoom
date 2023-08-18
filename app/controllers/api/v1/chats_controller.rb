@@ -1,37 +1,47 @@
 module Api
   module V1
     class ChatsController < ApplicationController
+      include SessionManagement
       include ValidationHelper
+      include Users::ClassMethods
+      include ChatApp::ClassMethods
       
       def get_chats
-        sid = cookies[:sid]
-        username = sid ? sessions.getSessionUser(sid) : ''
-        
-        if sid.blank? || !is_valid_username(username)
+        session_details = get_session_details(request)
+        username = session_details[:username]
+        sid = session_details[:sid]
+        puts "Session cookie: #{session_details}"
+        puts "username: #{username}"
+        puts "Sid: #{sid}"
+
+        if !session_exists?(sid) || !ValidationHelper.is_valid_username?(username)
+          puts "falled here!"
           send_error(401, 'auth-missing')
         else
           render json: {
-            offlineUsers: User.get_offline_users(),
-            loggedInUsers: User.get_logged_in_users(),
-            messages: ChatApp.get_messages()
+            offlineUsers: users_manager.get_offline_users(),
+            loggedInUsers: users_manager.get_logged_in_users(),
+            messages: chat_manager.get_messages()
           }
         end
       end
 
       def create_chat
-        sid = cookies[:sid]
-        username = sid ? sessions.getSessionUser(sid) : ''
+        session_details = get_session_details(request)
+        username = session_details[:username]
+        sid = session_details[:sid]
+
         message = params[:message]
         
-        if sid.blank? || !is_valid_username(username)
+        if !ValidationHelper.is_valid_username?(username)
           send_error(401, 'auth-missing')
         elsif message.blank?
           send_error(400, 'required-message')
-        elsif !is_valid_message(message)
+        elsif !ValidationHelper.is_valid_message?(message)
           send_error(400, 'invalid-message')
         else
-          id = ChatApp.add_message(sender: username, message: message)
-          render json: ChatApp.get_message(id)
+          id = chat_manager.add_message(username, message)
+          render json: chat_manager.get_message(id)
         end
       end
 
