@@ -102,6 +102,12 @@ export function addAbilityToSendMessage({ state, appEl, feedEl, controlEl }) {
                 renderControl({ state, controlEl });
             })
             .catch(err => {
+                clearTimeout(timeoutId);
+
+                if (err?.error == CLIENT.NO_SESSION) { // here NOT expected "error"
+                    logout(); // set to logged out case, and still need the run the following setError
+                };
+
                 setError(err?.error || 'ERROR'); // Ensure that the error ends up truthy
                 renderFeed({ state, feedEl });
                 renderControl({ state, controlEl });

@@ -183,6 +183,12 @@ function addAbilityToSendMessage(_ref3) {
         controlEl: controlEl
       });
     })["catch"](function (err) {
+      clearTimeout(timeoutId);
+      if ((err === null || err === void 0 ? void 0 : err.error) == _constants__WEBPACK_IMPORTED_MODULE_0__.CLIENT.NO_SESSION) {
+        // here NOT expected "error"
+        (0,_state__WEBPACK_IMPORTED_MODULE_2__.logout)(); // set to logged out case, and still need the run the following setError
+      }
+      ;
       (0,_state__WEBPACK_IMPORTED_MODULE_2__.setError)((err === null || err === void 0 ? void 0 : err.error) || 'ERROR'); // Ensure that the error ends up truthy
       (0,_render__WEBPACK_IMPORTED_MODULE_3__.renderFeed)({
         state: state,
@@ -336,16 +342,16 @@ function generateUsersHtml(state) {
 }
 ;
 function generateMessagesHtml(state) {
-  Object.entries(state.messages).sort();
-  var messagesHtml = Object.entries(state.messages).sort(function (a, b) {
-    return b[1].date - a[1].date;
-  }).map(function (userMessage) {
+  var messages = Object.values(state.messages);
+  var sortedMessages = messages.sort(function (a, b) {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+  var messagesHtml = sortedMessages.map(function (userMessage) {
     // every object entry array item has two keys - 0 as key, 1 as value, value is the real message
-    var _userMessage$ = userMessage[1],
-      id = _userMessage$.id,
-      message = _userMessage$.message,
-      sender = _userMessage$.sender,
-      date = _userMessage$.date;
+    var id = userMessage.id,
+      message = userMessage.message,
+      sender = userMessage.sender,
+      date = userMessage.date;
     var formattedDate = new Date(date);
     return "\n          <li class=\"message flex flex-row items-start mb-4 ".concat(sender === state.username ? "message-self" : "", "\" data-id=").concat(id, ">\n            <div class=\"message__sender min-w-fit flex flex-col items-start pr-12 mr-8 border-r-gray-500 border-r-2\">\n                <img class=\"avatar h-14 mb-2 border-2 rounded border-indigo-500/75\" src=\"./images/avatar-default.jpg\" alt=\"Default avatar\">\n                <span class=\"username\">").concat(sender, "</span>\n            </div>\n            <div class=\"message__content flex flex-col ").concat(sender === state.username ? "message__self text-green-500" : "", "\">\n                <span class=\"message__text\">").concat(message, "</span>\n                <span class=\"message__time text-gray-500\">").concat(formattedDate, "</span>\n            </div>\n          </li>\n        ");
   }).join('') || "<p>No Messages yet, start chat!</p>";

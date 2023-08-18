@@ -3,8 +3,15 @@ module SessionManagement
   include SessionData::ClassMethods
 
   def get_session_details(request)
-    cookie_data = cookies[:user_session]
-    parsed_cookie_data = JSON.parse(cookie_data) if cookie_data
+    cookie_data = cookies[:user_session].to_s
+
+    # here if bad cookie it will not raise error
+    # just return empty sid and username
+    parsed_cookie_data = begin
+      JSON.parse(cookie_data)
+    rescue JSON::ParserError
+      nil
+    end
 
     sid = parsed_cookie_data&.fetch('sid', '') || ''
     username = parsed_cookie_data&.fetch('username', '') || ''

@@ -133,10 +133,12 @@ function generateUsersHtml(state) {
 };
 
 function generateMessagesHtml(state) {
-  Object.entries(state.messages).sort()
-  const messagesHtml = Object.entries(state.messages).sort((a, b) => b[1].date - a[1].date).map((userMessage) => {
+  const messages = Object.values(state.messages);
+  const sortedMessages = messages.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const messagesHtml = sortedMessages.map((userMessage) => {
     // every object entry array item has two keys - 0 as key, 1 as value, value is the real message
-    const { id, message, sender, date } = userMessage[1];
+    const { id, message, sender, date } = userMessage;
     const formattedDate = new Date(date);
 
     return `

@@ -49,9 +49,9 @@ module Api
           cookies.delete(cookie_name)
         end
 
-        if username.present?
+        if session_exists?(sid)
           users_manager.set_user_status(username, false)
-          delete_session(sid) # Delete the session from SessionData
+          delete_user_session(sid) # Delete the session from SessionData
           update_user_login_status(username) # Update the user's login status
           render json: { username: username }
           # Send a JSON response with the username of the session, if it exists.

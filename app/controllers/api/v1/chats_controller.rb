@@ -10,12 +10,8 @@ module Api
         session_details = get_session_details(request)
         username = session_details[:username]
         sid = session_details[:sid]
-        puts "Session cookie: #{session_details}"
-        puts "username: #{username}"
-        puts "Sid: #{sid}"
 
         if !session_exists?(sid) || !ValidationHelper.is_valid_username?(username)
-          puts "falled here!"
           send_error(401, 'auth-missing')
         else
           render json: {
@@ -33,7 +29,7 @@ module Api
 
         message = params[:message]
         
-        if !ValidationHelper.is_valid_username?(username)
+        if !session_exists?(sid) || !ValidationHelper.is_valid_username?(username)
           send_error(401, 'auth-missing')
         elsif message.blank?
           send_error(400, 'required-message')

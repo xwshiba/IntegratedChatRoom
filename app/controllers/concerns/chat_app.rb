@@ -1,13 +1,17 @@
 module ChatApp
+
+  id_1 = SecureRandom.uuid
+  id_2 = SecureRandom.uuid
+
   DEFAULT_MESSAGES = {
-    'id1' => {
-      id: 'id1',
+    id_1 => {
+      id: id_1,
       message: 'Welcome to the chat room!',
       sender: 'admin',
       date: Time.now
     },
-    'id2' => {
-      id: 'id2',
+    id_2 => {
+      id: id_2,
       message: "How's your day going?",
       sender: 'admin',
       date: Time.now
@@ -23,15 +27,16 @@ module ChatApp
     end
 
     def add_message(sender, message)
-      id = SecureRandom.uuid
-      @messages[sender] ||= []
-      @messages[sender] << {
-        id: id,
+      cur_id = SecureRandom.uuid
+      @messages[cur_id] = {
+        id: cur_id,
         sender: sender,
         message: message,
         date: Time.now
       }
-      id
+      puts "Messages after adding a message: #{@messages}"
+      puts "id: #{@id}"
+      cur_id
     end
 
     def get_messages
