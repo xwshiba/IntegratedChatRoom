@@ -412,11 +412,11 @@ function fetchRequest(url, options) {
 // This makes these functions fully decoupled and reuseable
 
 function fetchCsrfToken() {
-  return fetchRequest('/api/v1/csrf_token');
+  return fetchRequest('/api/v2/csrf_token');
 }
 ;
 function fetchSession() {
-  return fetchRequest('/api/v1/session', {
+  return fetchRequest('/api/v2/session', {
     method: 'GET',
     headers: {
       'content-type': 'application/json'
@@ -426,7 +426,7 @@ function fetchSession() {
 }
 ;
 function fetchLogin(csrfToken, username) {
-  return fetchRequest('/api/v1/session', {
+  return fetchRequest('/api/v2/session', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -440,7 +440,7 @@ function fetchLogin(csrfToken, username) {
 }
 ;
 function fetchLogout(csrfToken) {
-  return fetchRequest('/api/v1/session', {
+  return fetchRequest('/api/v2/session', {
     method: 'DELETE',
     headers: {
       'X-CSRF-Token': csrfToken
@@ -449,7 +449,7 @@ function fetchLogout(csrfToken) {
 }
 ;
 function fetchChatData() {
-  return fetchRequest('/api/v1/chats', {
+  return fetchRequest('/api/v2/chats', {
     method: 'GET',
     headers: {
       'content-type': 'application/json'
@@ -458,7 +458,7 @@ function fetchChatData() {
 }
 ;
 function fetchSendMessage(csrfToken, message) {
-  return fetchRequest('/api/v1/chats', {
+  return fetchRequest('/api/v2/chats', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

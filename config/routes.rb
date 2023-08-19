@@ -2,14 +2,14 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "api/v1/sessions#get_session"
+  root "api/v2/sessions#get_session"
 
   # chat app routes
   resources :chats, only: [:index, :create]
 
   # api specific routes
   namespace :api do    
-    namespace :v1 do
+    namespace :v2 do
       # csrf token route
       get 'csrf_token', to: 'csrf_tokens#show'
       

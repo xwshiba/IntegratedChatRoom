@@ -34,8 +34,6 @@ module ChatApp
         message: message,
         date: Time.now
       }
-      puts "Messages after adding a message: #{@messages}"
-      puts "id: #{@id}"
       cur_id
     end
 

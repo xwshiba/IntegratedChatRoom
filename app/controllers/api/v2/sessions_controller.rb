@@ -1,6 +1,6 @@
 # app/controllers/api/v1/sessions_controller.rb
 module Api
-  module V1
+  module V2
     class SessionsController < ApplicationController
       include SessionManagement
       include ValidationHelper
