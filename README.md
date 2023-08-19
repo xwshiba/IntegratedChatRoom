@@ -1,8 +1,11 @@
 # IntegratedChatRoom
 
 This app is a single page application that involves multiple logged in users. Users can send messages, view logged in users, and receive messages without refreshing the page.
+
 This project demonstrates understanding for web fundamentals.
+
 The current back-end is using Ruby on Rails. Front-end using JavaScript (and Wepback of course). Previously back-end was Vanilla JS and can be referenced from `api/v1` folder.
+
 The current front-end CSS is using Tailwind. Previously it was just CSS. Review the commit history in `tailwind` branch for more info. 
 
 ### Details
