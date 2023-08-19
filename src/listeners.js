@@ -1,5 +1,6 @@
 import { SERVER, CLIENT } from './constants';
 import {
+    fetchCsrfToken,
     fetchChatData,
     fetchLogin,
     fetchLogout,
@@ -21,7 +22,7 @@ import {
 
 let timeoutId = '';
 
-export function addAbilityToLogin({ state, appEl, feedEl, controlEl }) {
+export function addAbilityToLogin({ state, appEl, feedEl, controlEl}) {
     // Using 'submit' so we can get both submit via button-click and by "enter"
     appEl.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -34,7 +35,11 @@ export function addAbilityToLogin({ state, appEl, feedEl, controlEl }) {
         waitOnLogin();
         renderFeed({ state, feedEl }); // show loading state
 
-        fetchLogin(username)
+        fetchCsrfToken()
+            .then(token => {
+                const csrfToken = token.token;
+                return fetchLogin(csrfToken, username);
+            })
             .then(chatData => {
                 login(username);
                 setChatApp(chatData);
@@ -43,6 +48,7 @@ export function addAbilityToLogin({ state, appEl, feedEl, controlEl }) {
                 setTimeout(pollRefreshedData, 5000, { state, feedEl, controlEl });
             })
             .catch(err => {
+                console.log(err)
                 setError(err?.error || 'ERROR'); // Ensure that the error ends up truthy
                 renderFeed({ state, feedEl });
                 renderControl({ state, controlEl });
@@ -61,7 +67,11 @@ export function addAbilityToLogout({ state, appEl, feedEl, controlEl}) {
         renderControl({ state, controlEl });
         clearTimeout(timeoutId);
 
-        fetchLogout() // We don't really care about results
+        fetchCsrfToken()
+            .then(token => {
+                const csrfToken = token.token;
+                return fetchLogout(csrfToken)
+            }) // We don't really care about results
             .catch(err => {
                 setError(err?.error || 'ERROR'); // Ensure that the error ends up truthy
                 renderFeed({ state, feedEl });
@@ -81,13 +91,23 @@ export function addAbilityToSendMessage({ state, appEl, feedEl, controlEl }) {
         waitOnMessages(); // Show loading state
         renderFeed({ state, feedEl });   
 
-        fetchSendMessage(message)
+        fetchCsrfToken()
+            .then(token => {
+                const csrfToken = token.token;
+                return fetchSendMessage(csrfToken, message)
+            })
             .then(messageObj => {
                 addMessage(messageObj);
                 renderFeed({ state, feedEl });
                 renderControl({ state, controlEl });
             })
             .catch(err => {
+                clearTimeout(timeoutId);
+
+                if (err?.error == CLIENT.NO_SESSION) { // here NOT expected "error"
+                    logout(); // set to logged out case, and still need the run the following setError
+                };
+
                 setError(err?.error || 'ERROR'); // Ensure that the error ends up truthy
                 renderFeed({ state, feedEl });
                 renderControl({ state, controlEl });

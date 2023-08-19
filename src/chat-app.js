@@ -9,7 +9,7 @@ import state, {
 } from './state';
 import { 
     fetchSession, 
-    fetchChatData, 
+    fetchChatData,
 } from './services';
 import {
     renderFeed,
@@ -19,16 +19,17 @@ import {
     addAbilityToLogin,
     addAbilityToLogout,
     addAbilityToSendMessage,
-    // pollRefreshedData,
+    pollRefreshedData,
 } from './listeners';
 
 const appEl = document.querySelector('#app');
 const feedEl = document.querySelector('.main__feed');
 const controlEl = document.querySelector('.main__control');
 renderFeed({ state, appEl, feedEl });
-addAbilityToLogin({ state, appEl, feedEl, controlEl });
-addAbilityToLogout({ state, appEl, feedEl, controlEl });
-addAbilityToSendMessage({ state, appEl, feedEl, controlEl });
+addAbilityToLogin({ state, appEl, feedEl, controlEl});
+addAbilityToLogout({ state, appEl, feedEl, controlEl});
+addAbilityToSendMessage({ state, appEl, feedEl, controlEl});
+
 checkForSession();
 
 //////////

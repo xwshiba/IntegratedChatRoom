@@ -2,6 +2,8 @@
 
 This app is a single page application that involves multiple logged in users. Users can send messages, view logged in users, and receive messages without refreshing the page.
 This project demonstrates understanding for web fundamentals.
+The current back-end is using Ruby on Rails. Front-end using JavaScript (and Wepback of course). Previously back-end was Vanilla JS and can be referenced from `api/v1` folder.
+The current front-end CSS is using Tailwind. Previously it was just CSS. Review the commit history in `tailwind` branch for more info. 
 
 ### Details
 - The HTML will load a static JS file bundled and transpiled with webpack and babel
@@ -16,19 +18,22 @@ This project demonstrates understanding for web fundamentals.
 - Multiple users can be logged in at once and can send and see messages from one another
 
 ### Running Instructions
-- The app is usable by running `npm install` (once only), `npm run build`, `npm start`
-- main branch - CSS for appearance
-- tailwind branch - tailwind for appearance
+- The app is usable by 
+  - first, install ruby 3.2.2 and rails. Check by running `ruby -v` and `rails -v`
+  - Install dependencies: `bundle install`, `npm install` (once only)
+  - Generate front-end bundle.js using Webpack: `npm run build`, 
+  - Using `npm start`, which is equivalent to `rails server`.
 
 ### Tech Stacks
-- RESTful services using express
-- Call RESTful services in front end JS using fetch
+- RESTful services using Ruby on Rails
+- Call RESTful services in front end JS using async fetch
 - Maintaining persistent state on the server and using services to load and update client state
 - Using browser based JS to maintain and update state, and use that state to render updates to the HTML
 - Using RESTful services for authentication/authorization
 - Implement Basic polling feature to check the server for updates and update client state
   - Not using websockets or long polling, just a simple time-based loop
 - Using Tailwind CSS (including [Flowbite, MIT License](https://flowbite.com/docs/getting-started/license/)) in Tailwind branch
+- No database attached yet
 
 ### Security
 
@@ -46,6 +51,6 @@ This project demonstrates understanding for web fundamentals.
 - The services follow the REST requirements
 - The service urls are in an `/api/` path
 - The service urls have a version in their path
-- No paginate yet
+- No pagination yet
 - Use Semantic HTML
 - All services will return JSON (if they return a body) and receive JSON (if they receive a body)
